@@ -16,7 +16,7 @@ defmodule KlMultiple do
   end
 
   defp multiple_calc(number, 0, num_acc, list) do
-    {:ok, list} = {:ok, Enum.reverse(list)}
+     {:ok, Enum.reverse(list)}
   end
 
   defp multiple_calc(number, multiple, num_acc, list) when multiple > 0 do
