@@ -3,7 +3,7 @@ defmodule KlChallengeFactorialTest do
   doctest KlChallengeFactorial
 
   test "n = 5" do
-    assert KlChallengeFactorial.fact(5) == 120
+    assert KlChallengeFactorial.factorial(5) == 120
   end
 
 end
