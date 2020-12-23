@@ -1,9 +1,9 @@
-defmodule KlMultiple.MixProject do
+defmodule Multiple.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kl_multiple,
+      app: :multiple,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
