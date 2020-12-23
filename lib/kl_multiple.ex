@@ -15,7 +15,12 @@ defmodule KlMultiple do
     multiple_calc(multiple, number, 0, [])
   end
 
-  defp multiple_calc(multiple, 0, num_acc, list) do
+  def compute_multiple(_multiple, _number) do
+    {:error, :not_a_number}
+  end
+
+
+  defp multiple_calc(_multiple, 0, _num_acc, list) do
      {:ok, Enum.reverse(list)}
   end
 
@@ -25,11 +30,7 @@ defmodule KlMultiple do
   end
 
 
-  def compute_multiple(_multiple, _number) do
-    {:error, :not_a_number}
-  end
-
-
+  
   def sum_multiple(list) when is_list(list) do
     {:ok, Enum.sum(list)}
   end
