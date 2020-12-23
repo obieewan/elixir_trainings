@@ -3,7 +3,13 @@ defmodule KlChallengeFactorialTest do
   doctest KlChallengeFactorial
 
   test "n = 5" do
-    assert KlChallengeFactorial.factorial(5) == 120
+    assert KlChallengeFactorial.factorial(5) == {:ok, 120}
   end
+
+  test "error factorial" do
+    assert KlChallengeFactorial.factorial("") == {:error, "Invalid"}
+  end
+
+
 
 end
