@@ -1,4 +1,4 @@
-defmodule KlMultiple do
+defmodule Multiple do
 
   #returns
   def multiple(multiple, number) do
