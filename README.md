@@ -1,4 +1,4 @@
-# KlChallengeFactorial
+#ChallengeFactorial
 
 **TODO: Add description**
 
@@ -10,7 +10,7 @@ by adding `kl_challenge_factorial` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:kl_challenge_factorial, "~> 0.1.0"}
+    {:challenge_factorial, "~> 0.1.0"}
   ]
 end
 ```
