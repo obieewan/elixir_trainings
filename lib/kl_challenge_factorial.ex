@@ -1,4 +1,4 @@
-defmodule KlChallengeFactorial do
+defmodule ChallengeFactorial do
 
 
   def factorial(n) when is_number(n) do
