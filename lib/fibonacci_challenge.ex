@@ -1,19 +1,17 @@
 defmodule FibonacciChallenge do
+  
 
-
-  def calc_fib(0) do
-    0
+  def fib(index) do
+    fib(index, 0, 1)
   end
 
-  def calc_fib(1) do 
-     1
+  defp fib(index, _prev, next) when index < 0 do
+   next 
   end
 
-  def calc_fib(number) do
-    calc_fib(number - 1) + calc_fib(number - 2)
+  defp fib(index, prev , next) do
+    new_index = index - 1 
+    new_prev = prev + next
+    fib(new_index, new_prev, prev)
   end
-
-
-
-
 end
