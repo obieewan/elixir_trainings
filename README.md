@@ -1,4 +1,4 @@
-# KlMultiple
+# Multiple
 
 **TODO: Add description**
 
@@ -10,7 +10,7 @@ by adding `kl_multiple` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:kl_multiple, "~> 0.1.0"}
+    {:multiple, "~> 0.1.0"}
   ]
 end
 ```
