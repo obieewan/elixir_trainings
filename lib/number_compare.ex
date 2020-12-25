@@ -2,12 +2,19 @@ defmodule NumberCompare do
   #compares numbers which is greater and returns error
   #if inputs are not numbers
   def greater(number, other_number) do
-    with {:ok, number} <- check_greater(number, other_number) do
-      {:ok, number}
-    else
-      :error  -> {:error, "Invalid Input"}
+    case check_greater(number, other_number) do
+      :error -> {:error, "Invalid Input"}
+      {:ok, number} -> {:ok, number}
     end
   end
+
+  #
+  #    with {:ok, number} <- check_greater(number, other_number) do
+  #      {:ok, number}
+  #    else
+  #      :error  -> {:error, "Invalid Input"}
+  #    end
+  #  end
 
   #checks if the inputs are numbers when true
   #runs check fn 
