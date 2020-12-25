@@ -18,8 +18,8 @@ defmodule NumberCompareTest do
     assert NumberCompare.check_greater(5,9) == {:ok, 9}
   end
 
-  test "check_greater error return" do
-    assert NumberCompare.check_greater("",[]) == :error
+  test "greater error return" do
+    assert NumberCompare.greater("",[]) == {:error, "Invalid"}
   end
 
 end
