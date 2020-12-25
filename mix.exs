@@ -1,9 +1,9 @@
-defmodule KlChallengeFactorial.MixProject do
+defmodule FactorialChallenge.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :kl_challenge_factorial,
+      app: :factorial_challenge,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
