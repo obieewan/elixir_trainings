@@ -1,4 +1,4 @@
-defmodule Physics.Rocketry.Converter do
+defmodule Rocketry.Converter do
 
   def nearest_tenth(val) do
     Float.ceil val, 1

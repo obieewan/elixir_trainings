@@ -1,6 +1,6 @@
 defmodule Physics.Rocketry do
 
-  alias Physics.Rocketry.Converter, as: Conv
+  alias Rocketry.Converter, as: Conv
 
 
 
