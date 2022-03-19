@@ -1,14 +1,17 @@
 defmodule Dictionary do
 
-
-  def hello do
-    IO.puts "!!!Hello World!!!"
+  def word_list do
+    File.read!("assets/words.txt")                    #Reads file from assets
+    |>String.split(~r/\n/, trim: true)                # Splits words dictionary inside word.txt excludes empty string
   end
 
-  def hey do
-    IO.puts "Sup?"
+
+  def random_word do                                  # Chooses a random word from word list
+    word_list
+    |>Enum.random
   end
-  
+
+ 
 end
 
 
