@@ -1,14 +1,12 @@
 defmodule Dictionary do
 
-  def word_list do
-    "assets/words.txt"
-    |>File.read!()                                      #Reads file from assets
-    |>String.split(~r/\n/, trim: true)                # Splits words dictionary inside word.txt excludes empty string
-  end
+  @word_list "assets/words.txt"                         #Changing word list to attribute
+    |> File.read!                             
+    |> String.split(~r/\n/, trim: true)
 
 
   def random_word do                                  # Chooses a random word from word list
-    word_list
+   @word_list 
     |>Enum.random()                                    # Picks random word
   end
 
