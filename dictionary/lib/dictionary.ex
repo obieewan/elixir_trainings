@@ -1,6 +1,6 @@
 defmodule Dictionary do
 
-  @word_list "assets/words.txt"                         #Changing word list to attribute
+  @word_list "assets/words.txt"                         #Changing word list to module attribute
     |> File.read!                             
     |> String.split(~r/\n/, trim: true)
 
