@@ -1,5 +1,6 @@
 defmodule Hangman do
 
+  alias Hangman.Impl.Game, as: Game
   @type state :: :initiallizing | :won | :lost | :good_guess | :bad_guess | :already_used
   @type game :: any
   @type tally :: %{
@@ -11,6 +12,7 @@ defmodule Hangman do
 
   @spec new_game() :: game
   def new_game do
+    Game.new_game() 
   end
 
   #make move takes the existing game and returns to new_game state and tally
