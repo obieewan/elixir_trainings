@@ -28,6 +28,15 @@ defmodule Lists do
   def map([], _func), do: []
   def map([ head | tail ], func), do: [ func.(head) | map(tail, func)] 
    
+  # sum of pairs
+  
+  def sum_pairs([]), do: []
+  def sum_pairs([ head1, head2 | tail]), do: [ head1 + head2 | sum_pairs(tail)]
+
+
+  def even_length?([_a]), do: false
+  def even_length?([_a, _b]), do: true
+  def even_length?([ _a, _b | tail]), do: even_length?(tail)
 
     
 end
