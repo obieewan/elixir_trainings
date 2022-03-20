@@ -1,4 +1,4 @@
-defmodule Hangman do
+defmodule Hangman do # API MODULE
 
   alias Hangman.Impl.Game, as: Game
   @type state :: :initiallizing | :won | :lost | :good_guess | :bad_guess | :already_used
@@ -11,9 +11,10 @@ defmodule Hangman do
   }
 
   @spec new_game() :: game
-  def new_game do
-    Game.new_game() 
-  end
+  defdelegate new_game, to: Game
+  # delegated new_game to Impl module 
+  # to get rid of impl code in an API
+
 
   #make move takes the existing game and returns to new_game state and tally
   @spec make_move(game, String.t) :: {game, tally}
