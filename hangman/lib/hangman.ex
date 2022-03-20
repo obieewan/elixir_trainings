@@ -1,9 +1,10 @@
 defmodule Hangman do # API MODULE
 
   alias Hangman.Impl.Game, as: Game
-  @type state :: :initiallizing | :won | :lost | :good_guess | :bad_guess | :already_used
-  @type game :: any
-  @type tally :: %{
+
+  @type   state :: :initiallizing | :won | :lost | :good_guess | :bad_guess | :already_used
+  @opaque game  :: Game.t
+  @type   tally :: %{
     turns_left: integer,
     game_state: state,
     letters: list(String.t),
@@ -12,7 +13,7 @@ defmodule Hangman do # API MODULE
 
   @spec new_game() :: game
   defdelegate new_game, to: Game
-  # delegated new_game to Impl module 
+  # delegated new_game to Impl Game module 
   # to get rid of impl code in an API
 
 
