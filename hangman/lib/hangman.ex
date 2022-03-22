@@ -14,8 +14,8 @@ defmodule Hangman do # API MODULE
 
   #make move takes the existing game and returns to new_game state and tally
   @spec make_move(game, String.t) :: {game, Type.tally}
-  def make_move(_game, _guess) do 
-  end
+  defdelegate make_move(game, guess), to: Game
+
 
 
 end
