@@ -18,6 +18,7 @@ defmodule HangmanImplGameTest do
     assert game.turns_left == 7
     assert game.game_state == :initializing
     assert game.letters == ["c", "o", "m", "b", "a", "t"]
+    #test each element is in lower case character ("a" to "z")
     assert Enum.all?( game.letters, fn codepoint -> String.match?(codepoint, ~r/[a-z]/) end)
   
   end
