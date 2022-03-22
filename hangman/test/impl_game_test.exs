@@ -18,6 +18,8 @@ defmodule HangmanImplGameTest do
     assert game.turns_left == 7
     assert game.game_state == :initializing
     assert game.letters == ["c", "o", "m", "b", "a", "t"]
+    assert Enum.all?( game.letters, fn codepoint -> String.match?(codepoint, ~r/[a-z]/) end)
+  
   end
   
 
