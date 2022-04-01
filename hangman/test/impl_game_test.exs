@@ -1,10 +1,9 @@
 defmodule HangmanImplGameTest do
   use ExUnit.Case
+
   alias Hangman.Impl.Game
 
-
-
-  test "new game returns a structure" do
+  test "new game returns structure" do
     game = Game.new_game
 
     assert game.turns_left == 7
@@ -13,34 +12,16 @@ defmodule HangmanImplGameTest do
   end
 
   test "new game returns correct word" do
-    game = Game.new_game("combat")
+    game = Game.new_game()
 
     assert game.turns_left == 7
     assert game.game_state == :initializing
-    assert game.letters == ["c", "o", "m", "b", "a", "t"]
-    #test each element is in lower case character ("a" to "z")
-    assert Enum.all?( game.letters, fn codepoint -> String.match?(codepoint, ~r/[a-z]/) end)
-  
+    assert Enum.all?(game.letters, fn codepoint -> String.match?(codepoint, ~r/[a-z]/) end)
+
   end
 
 
-  test "state doesn't change if a game is won or lost" do
-    for state <- [:won, :lost] do
-      game = Game.new_game("combat")
-      game = Map.put(game, :game_state, state)
-      { new_game, _tally } = Game.make_move(game, "x")
-      assert new_game == game
-    end
-  end
 
 
 end
-
-
-
-  
-
-
-
-
 
