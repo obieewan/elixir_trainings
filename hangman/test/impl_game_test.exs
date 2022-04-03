@@ -51,6 +51,42 @@ defmodule HangmanImplGameTest do
   end
 
 
+  test " we recognize a letter in the word" do
+    game = Game.new_game("combat") 
+    {game, tally} = Game.make_move(game, "m")
+    assert tally.game_state == :good_guess
+    {game, tally} = Game.make_move(game, "a")
+    assert tally.game_state == :good_guess
+    {game, tally} = Game.make_move(game, "c")
+    assert tally.game_state == :good_guess
+    {game, tally} = Game.make_move(game, "o")
+    assert tally.game_state == :good_guess
+    {_game, tally} = Game.make_move(game, "b")
+    assert tally.game_state == :good_guess
+  end
+
+  test " we recognize a letter not in the word" do
+    game = Game.new_game("combat")
+    {game, tally} = Game.make_move(game, "g")
+    assert tally.game_state == :bad_guess
+    {game, tally} = Game.make_move(game, "h")
+    assert tally.game_state == :bad_guess
+    {game, tally} = Game.make_move(game, "i")
+    assert tally.game_state == :bad_guess
+  end
+
+  test "last guess game over" do
+    game = Game.new_game("combat")
+    #game = %{game | turns_left: 1 }
+    game = Map.put(game, :turns_left, 1)
+    {_game, tally} = Game.make_move(game, "h")
+    assert tally.game_state == :lost
+ end
+
+ 
+
+
+
 
 
 end
