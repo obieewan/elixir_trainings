@@ -111,6 +111,23 @@ defmodule HangmanImplGameTest do
     |> test_sequence_of_moves()
   end
 
+  test "can handle a losing game" do
+    [
+      #guess | state        turns       letters               used
+      ["a", :bad_guess,       6,  ["_", "_", "_", "_","_"],   ["a"]],
+      ["a", :already_used,    6,  ["_", "_", "_", "_", "_"],  ["a"]],
+      ["p", :bad_guess,       5,  ["_", "_", "_", "_", "_"],  ["a", "p"]],
+      ["x", :bad_guess,       4,  ["_", "_", "_", "_", "_"],  ["a", "p", "x"]],
+      ["l", :good_guess,      4,  ["_", "_", "l", "l", "_"],  ["a", "l", "p", "x"]],
+      ["o", :good_guess,      4,  ["_", "_", "l", "l", "o"],  ["a", "l", "o", "p", "x"]],
+      ["y", :bad_guess,       3,  ["_", "_", "l", "l", "o"],  ["a", "l", "o", "p", "x", "y"]],
+      ["u", :bad_guess,       2,  ["_", "_", "l", "l", "o"],  ["a", "l", "o", "p", "u", "x", "y"]],
+      ["w", :bad_guess,       1,  ["_", "_", "l", "l", "o"],  ["a", "l", "o", "p", "u", "w", "x", "y"]]
+      #["z", :lost,            0,  ["_", "_", "l", "l", "o"],  ["a", "l", "o", "p", "u", "w", "x", "y", "z"]]
+    ]
+    |> test_sequence_of_moves()
+  end
+ 
 
   def test_sequence_of_moves(script) do
     game = Game.new_game("hello")
