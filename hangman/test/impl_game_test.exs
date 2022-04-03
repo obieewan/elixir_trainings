@@ -53,13 +53,13 @@ defmodule HangmanImplGameTest do
 
   test " we recognize a letter in the word" do
     game = Game.new_game("combat") 
-    {game, tally} = Game.make_move(game, "m")
+    {_game, tally} = Game.make_move(game, "m")
     assert tally.game_state == :good_guess
-    {game, tally} = Game.make_move(game, "a")
+    {_game, tally} = Game.make_move(game, "a")
     assert tally.game_state == :good_guess
-    {game, tally} = Game.make_move(game, "c")
+    {_game, tally} = Game.make_move(game, "c")
     assert tally.game_state == :good_guess
-    {game, tally} = Game.make_move(game, "o")
+    {_game, tally} = Game.make_move(game, "o")
     assert tally.game_state == :good_guess
     {_game, tally} = Game.make_move(game, "b")
     assert tally.game_state == :good_guess
@@ -67,11 +67,11 @@ defmodule HangmanImplGameTest do
 
   test " we recognize a letter not in the word" do
     game = Game.new_game("combat")
-    {game, tally} = Game.make_move(game, "g")
+    {_game, tally} = Game.make_move(game, "g")
     assert tally.game_state == :bad_guess
-    {game, tally} = Game.make_move(game, "h")
+    {_game, tally} = Game.make_move(game, "h")
     assert tally.game_state == :bad_guess
-    {game, tally} = Game.make_move(game, "i")
+    {_game, tally} = Game.make_move(game, "i")
     assert tally.game_state == :bad_guess
   end
 
@@ -83,11 +83,50 @@ defmodule HangmanImplGameTest do
     assert tally.game_state == :lost
  end
 
- 
+
+ #hello
+  test " can handle a sequence of moves" do
+    [
+      #guess | state        turns       letters               used
+      ["a", :bad_guess,       6,  ["_", "_", "_", "_","_"],   ["a"]],
+      ["a", :already_used,    6,  ["_", "_", "_", "_", "_"],  ["a"]],
+      ["e", :good_guess,      6,  ["_", "e", "_", "_", "_"],  ["a", "e"]],
+      ["x", :bad_guess,       5,  ["_", "e", "_", "_", "_"],  ["a", "e", "x"]]
+    ]
+    |> test_sequence_of_moves()
+  end
+
+  test " can handle a winning game" do
+    [
+      #guess | state        turns       letters               used
+      ["a", :bad_guess,       6,  ["_", "_", "_", "_","_"],   ["a"]],
+      ["a", :already_used,    6,  ["_", "_", "_", "_", "_"],  ["a"]],
+      ["e", :good_guess,      6,  ["_", "e", "_", "_", "_"],  ["a", "e"]],
+      ["x", :bad_guess,       5,  ["_", "e", "_", "_", "_"],  ["a", "e", "x"]],
+      ["l", :good_guess,      5,  ["_", "e", "l", "l", "_"],  ["a", "e", "l", "x"]],
+      ["o", :good_guess,      5,  ["_", "e", "l", "l", "o"],  ["a", "e", "l", "o", "x"]],
+      ["y", :bad_guess,       4,  ["_", "e", "l", "l", "o"],  ["a", "e", "l", "o", "x", "y"]],
+      ["h", :won,             4,  ["h", "e", "l", "l", "o"],  ["a", "e", "h", "l", "o", "x", "y"]]
+    ]
+    |> test_sequence_of_moves()
+  end
 
 
+  def test_sequence_of_moves(script) do
+    game = Game.new_game("hello")
+    Enum.reduce(script, game, &check_move/2)
+  end
 
+  defp check_move([guess, state, turns, letters, used], game) do
+    {game, tally} = Game.make_move(game, guess)
 
+    assert tally.game_state == state
+    assert tally.turns_left == turns
+    assert tally.letters == letters
+    assert tally.used == used
 
+    game
+  end
+  
 end
 
