@@ -43,12 +43,34 @@ defmodule Hangman.Impl.Game do
   end
   ######################################################################
 
-  #make move function accepts game state either won or lost
+  #make move function accepts game state either won or lost it will exit an returns the existing game state
+  #if not :won or :lost gonna accept the letter and checked it in accept_guess whether it is already used or not
   @spec make_move(t, String.t) :: {t, Type.tally}
   def make_move(game = %{ game_state: state}, _guess) when state in [:won, :lost] do
-    { game, tally(game)}
+    game
+    #{game, tally(game)}
+    |> return_with_tally()
   end
 
+  #to check letter already used. passed on to accept_guess function that takes game state, guess, and boolean
+  def make_move(game, guess) do
+    accept_guess(game, guess, MapSet.member?(game.used, guess))
+    #{game, tally(game)}
+    |> return_with_tally()
+  end
+  ######################################################################
+
+  #when letter is already used
+  defp accept_guess(game, _guess, _already_used = true) do
+    %{ game | game_state: :already_used}
+  end
+
+  #when letter is not used
+  defp accept_guess(game, guess, _already_used) do
+    %{ game | used: MapSet.put(game.used, guess) }
+  end
+
+  ######################################################################
   defp tally(game) do
     %{
       turns_left: game.turns_left,
@@ -56,6 +78,10 @@ defmodule Hangman.Impl.Game do
       letters: [],
       used: game.used |> MapSet.to_list |> Enum.sort
     }
+  end
+
+  defp return_with_tally(game) do
+    {game, tally(game)}
   end
 
 
