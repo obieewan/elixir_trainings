@@ -16,8 +16,8 @@ defmodule Hangman do #API
   #  Game.new_game()
   #end
 
+  #created make move function and delegate it in implementation module
   @spec make_move(game, String.t) :: {game, Type.tally}
-  def make_move(game, guess) do
-  end
+  defdelegate make_move(game, guess), to: Game
 
 end

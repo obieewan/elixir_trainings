@@ -2,7 +2,7 @@ defmodule Hangman.Impl.Game do
 
   alias Hangman.Type
 
-  #type struct. it is conventionaol for a module that defines a structure
+  #type struct. it is conventional for a module that defines a structure
   #to export a type named t describing that struct
   #
   #it is not included in type module because it is private only the implementation 
@@ -25,7 +25,7 @@ defmodule Hangman.Impl.Game do
     used:       MapSet.new()
   )
 
-
+  ###################################################################### 
   #spec returns the type of module
   @spec new_game() :: t
   #calls new_game function an pass in the random word from dictionary
@@ -35,13 +35,28 @@ defmodule Hangman.Impl.Game do
 
   #spec takes a string and returns a module type
   @spec new_game(String.t) :: t
-  #takes a word as a parameter
+  #takes a word as a parameter and stores it in letters in list of codepoints
   def new_game(word) do
     %__MODULE__{
       letters: word |> String.codepoints
       }
   end
+  ######################################################################
 
+  #make move function accepts game state either won or lost
+  @spec make_move(t, String.t) :: {t, Type.tally}
+  def make_move(game = %{ game_state: state}, _guess) when state in [:won, :lost] do
+    { game, tally(game)}
+  end
+
+  defp tally(game) do
+    %{
+      turns_left: game.turns_left,
+      game_state: game.game_state,
+      letters: [],
+      used: game.used |> MapSet.to_list |> Enum.sort
+    }
+  end
 
 
 end
