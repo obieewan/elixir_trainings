@@ -3,6 +3,10 @@ defmodule Hangman do #API
   alias Hangman.Impl.Game
   
   @type   state:: :initializing | :won | :lost | :good_guess | :bad_guess | :already_used
+  #To keep internal state private, alias Game.t type to a new public type, just called game
+  #@opaque is used to say that the internals of the type should remain private from
+  #anyone who imports it
+  # alias Game.t type to a new public type, just called game
   @opaque game :: Game.t
   @type   tally :: %{
     turns_left: integer,
