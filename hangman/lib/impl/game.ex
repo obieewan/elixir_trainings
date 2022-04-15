@@ -22,10 +22,16 @@ defmodule Hangman.Impl.Game do
   )
 
 
+  #calls new_game function an pass in the random word from dictionary
   def new_game do
+    new_game(Dictionary.random_word)
+  end
+
+  #takes a word as a parameter
+  def new_game(word) do
     %__MODULE__{
-      letters: Dictionary.random_word |> String.codepoints
-    }
+      letters: word |> String.codepoints
+      }
   end
 
 
