@@ -51,6 +51,28 @@ defmodule HangmanImplGameTest do
     assert MapSet.equal?(game.used, MapSet.new(["x", "y"]))
   end
 
+  test "we recognize a letter in the word" do
+    game = Game.new_game("combat")
+    {_game, tally} = Game.make_move(game, "m")
+    assert tally.game_state == :good_guess
+
+    {_game, tally} = Game.make_move(game, "t")
+    assert tally.game_state == :good_guess
+  end
+
+  test "we recognize a letter not in the word" do
+    game = Game.new_game("combat")
+
+    {_game, tally} = Game.make_move(game, "x")
+    assert tally.game_state == :bad_guess
+
+    {_game, tally} = Game.make_move(game, "y")
+    assert tally.game_state == :bad_guess
+
+    {_game, tally} = Game.make_move(game, "t")
+    assert tally.game_state == :good_guess
+  end
+
     
 
 end
