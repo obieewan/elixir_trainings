@@ -67,61 +67,41 @@ defmodule Hangman.Impl.Game do
 
   #when letter is not used
   defp accept_guess(game, guess, _already_used) do
-    # checks if guess is in the word
     %{ game | used: MapSet.put(game.used, guess) }
     #passed in the updated game state to score_guess
-    |> score_guess(Enum.member?(game.letters, guess))
+    |> score_guess(game, Enum.member?(game.letters, guess)) # checks if guess is in the word
   end
 
   ######################################################################
   
-  #score_guess in loop accepting good guesses and also bad guesses until it reaches
-  # 0 turns left which returns :lost
   defp score_guess(game, _good_guess = true) do 
     # guessed all letters? -> :won | :good_guess
     # combat
     # abwcmot
     #checks if 1st set is a subset of the 2nd set
-    new_state = maybe_won(MapSet.subset?(MapSet.new(game.letters), game.used))
-    %{ game | game_state: new_state}
-  end
+    new_state = maybe_won(MapSet.subset?(MapSet.new(game.letters, game.used)))
 
-  #returns :lost when turns left == 0
-  defp score_guess(game = %{ turns_left: 1}, _bad_guess) do
-    # turns left == 1 -> lost | decrement turns_left, :bad_guess
-    %{ game | game_state: :lost, turns_left: 0}
+
   end
 
   defp score_guess(game, _bad_guess) do
-    %{ game | game_state: :bad_guess, turns_left: game.turns_left - 1}
+    # turns left == 1 -> lost | decrement turns_left, :bad_guess
+  
   end
     
-  ######################################################################
 
-  # updtes previous map
   defp tally(game) do
     %{
       turns_left: game.turns_left,
       game_state: game.game_state,
-      letters: reveal_guessed_letters(game),
+      letters: [],
       used: game.used |> MapSet.to_list |> Enum.sort
     }
   end
 
-  # added reveal either guessed letters or underscore
-  defp reveal_guessed_letters(game) do
-    game.letters
-    |> Enum.map(fn letter -> MapSet.member?(game.used, letter) |> maybe_reveal(letter) end)
-  end
-
-  defp maybe_won(true), do: :won
-  defp maybe_won(_), do: :good_guess
-
-  defp maybe_reveal(true, letter), do: letter
-  defp maybe_reveal(_, _letter), do: "_"
-
   defp return_with_tally(game) do
     {game, tally(game)}
   end
+
 
 end
