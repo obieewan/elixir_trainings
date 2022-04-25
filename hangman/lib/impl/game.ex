@@ -84,13 +84,11 @@ defmodule Hangman.Impl.Game do
     #checks if 1st set is a subset of the 2nd set
     new_state = maybe_won(MapSet.subset?(MapSet.new(game.letters), game.used))
     %{ game | game_state: new_state}
-
-
   end
 
   defp score_guess(game = %{ turns_left: 1}, _bad_guess) do
     # turns left == 1 -> lost | decrement turns_left, :bad_guess
-    %{ game | game_state: :lost} 
+    %{ game | game_state: :lost, turns_left: 0}
   end
 
   defp score_guess(game, _bad_guess) do
@@ -103,17 +101,25 @@ defmodule Hangman.Impl.Game do
     %{
       turns_left: game.turns_left,
       game_state: game.game_state,
-      letters: [],
+      letters: reveal_guessed_letters(game),
       used: game.used |> MapSet.to_list |> Enum.sort
     }
   end
 
-  defp return_with_tally(game) do
-    {game, tally(game)}
+  # added reveal either guessed letters or underscore
+  defp reveal_guessed_letters(game) do
+    game.letters
+    |> Enum.map(fn letter -> MapSet.member?(game.used, letter) |> maybe_reveal(letter) end)
   end
 
   defp maybe_won(true), do: :won
   defp maybe_won(_), do: :good_guess
 
+  defp maybe_reveal(true, letter), do: letter
+  defp maybe_reveal(_, _letter), do: "_"
+
+  defp return_with_tally(game) do
+    {game, tally(game)}
+  end
 
 end
