@@ -86,6 +86,7 @@ defmodule Hangman.Impl.Game do
     %{ game | game_state: new_state}
   end
 
+  #returns :lost when turns left == 0
   defp score_guess(game = %{ turns_left: 1}, _bad_guess) do
     # turns left == 1 -> lost | decrement turns_left, :bad_guess
     %{ game | game_state: :lost, turns_left: 0}
@@ -97,6 +98,7 @@ defmodule Hangman.Impl.Game do
     
   ######################################################################
 
+  # updtes previous map
   defp tally(game) do
     %{
       turns_left: game.turns_left,
