@@ -6,7 +6,7 @@ defmodule TextClient.Impl.Player do
 
   @spec start() :: :ok 
   def start() do
-    game = Hangman.new_game()
+    game = Hangman.new_game
     tally = Hangman.tally(game)
     interact({game, tally})
   end
