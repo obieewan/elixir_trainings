@@ -68,9 +68,14 @@ defmodule Hangman.Impl.Game do
   #when letter is not used
   defp accept_guess(game, guess, _already_used) do
     # checks if guess is in the word
-    %{ game | used: MapSet.put(game.used, guess) }
+    case low_case(guess) do
+      true -> %{ game | used: MapSet.put(game.used, guess) }
     #passed in the updated game state to score_guess
     |> score_guess(Enum.member?(game.letters, guess))
+
+      false -> nil
+    
+    end
   end
 
   ######################################################################
@@ -98,8 +103,11 @@ defmodule Hangman.Impl.Game do
     
   ######################################################################
 
+  defp low_case(guess) do
+    String.match?(guess, ~r/[a-z]/)
+  end
   # updtes previous map
-  defp tally(game) do
+  def tally(game) do
     %{
       turns_left: game.turns_left,
       game_state: game.game_state,
@@ -107,8 +115,17 @@ defmodule Hangman.Impl.Game do
       used: game.used |> MapSet.to_list |> Enum.sort
     }
   end
+  
+  defp return_with_tally(game) do
+    {game, tally(game)}
+  end
+
 
   # added reveal either guessed letters or underscore
+  #
+  defp reveal_guessed_letters(game = %{ game_state: :lost}) do
+    game.letters
+  end
   defp reveal_guessed_letters(game) do
     game.letters
     |> Enum.map(fn letter -> MapSet.member?(game.used, letter) |> maybe_reveal(letter) end)
@@ -120,8 +137,4 @@ defmodule Hangman.Impl.Game do
   defp maybe_reveal(true, letter), do: letter
   defp maybe_reveal(_, _letter), do: "_"
 
-  defp return_with_tally(game) do
-    {game, tally(game)}
   end
-
-end
