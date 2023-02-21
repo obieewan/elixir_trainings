@@ -1,9 +1,9 @@
-defmodule Hangman.MixProject do
+defmodule TextClient.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :hangman,
+      app: :text_client,
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
@@ -21,11 +21,7 @@ defmodule Hangman.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      #added dictionary dependency using path: tells mix that it can
-      #find this dependency in local file system, in a dictionary
-      #parallel to the current application
-      {:dictionary, path: "../dictionary"},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      { :hangman, path: "../hangman"},
     ]
   end
 end
